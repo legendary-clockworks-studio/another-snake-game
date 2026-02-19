@@ -4,7 +4,7 @@ class_name SnakeBody
 signal set_sprite
 
 
-var head: bool: 
+@export var head: bool: 
 	set(v): 
 		head = v; set_sprite.emit(head)
 		if head: tail = false; body = false
@@ -40,7 +40,7 @@ func _on_load() -> void:
 	head_sprite = load("res://Sprites/Snake/snake_head.png")
 	body_sprite = load("res://Sprites/Snake/snake_body.png")
 	tail_sprite = load("res://Sprites/Snake/snake_tail.png")
-	
+	print("loaded")
 
 
 func set_current_pos(new_pos: Vector2) -> void:
@@ -55,3 +55,4 @@ func _set_sprite(on: bool) -> void:
 	if head: snake_sprite.texture = head_sprite
 	if body: snake_sprite.texture = body_sprite
 	if tail: snake_sprite.texture = tail_sprite
+	print("sprite set")
