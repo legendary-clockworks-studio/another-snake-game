@@ -4,3 +4,6 @@
 
 [node name="Mask" type="Node2D" unique_id=1888901647]
 script = ExtResource("1_f0g21")
+
+[connection signal="tree_entered" from="." to="." method="_on_tree_entered"]
+[connection signal="tree_exited" from="." to="." method="_on_tree_exited"]

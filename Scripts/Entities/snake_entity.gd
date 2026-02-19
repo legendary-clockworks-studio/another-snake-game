@@ -19,7 +19,7 @@ var can_move: = true
 var tween: Tween
 
 func _ready() -> void:
-	_add_cell.connect(growth_loop)
+	
 	current_cell = global_position / cell_size
 	tween = create_tween().set_loops()
 	tween.tween_callback(move_player).set_delay(1)
@@ -39,7 +39,6 @@ func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("Space"):
 		add_cell = 1
 		_add_cell.emit(add_cell)
-
 
 
 func initialise_snake(cells: int):
@@ -84,7 +83,6 @@ func growth_loop(grow: int):
 	new_cell.current_pos = last_cell.current_pos
 
 
-
 func move_player():
 	current_dir = next_dir
 	next_cell = current_cell + current_dir
@@ -93,3 +91,11 @@ func move_player():
 	snake_cells[0].current_pos = global_position
 	for i in range(1, snake_cells.size()):
 		snake_cells[i].current_pos = snake_cells[i-1].last_pos
+
+
+func _on_tree_entered() -> void:
+	_add_cell.connect(growth_loop)
+
+
+func _on_tree_exited() -> void:
+	_add_cell.disconnect(growth_loop)
