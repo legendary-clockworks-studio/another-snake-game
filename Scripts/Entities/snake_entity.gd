@@ -39,6 +39,9 @@ func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("Space"):
 		add_cell = 1
 		_add_cell.emit(add_cell)
+	if event.is_action_pressed("Dash"):
+		add_cell = -1
+		_add_cell.emit(add_cell)
 
 
 func initialise_snake(cells: int):
@@ -72,15 +75,27 @@ func initialise_snake(cells: int):
 
 
 func growth_loop(grow: int):
-	var new_cell = SnakeBody.new()
-	var last_cell = snake_cells.back() as SnakeBody
-	add_child(new_cell)
-	new_cell._on_load()
-	snake_cells.push_back(new_cell)
-	for i in range(1, snake_cells.size()-1):
-		snake_cells[i].body = true
-	snake_cells[-1].tail = true
-	new_cell.current_pos = last_cell.current_pos
+	if grow > 0:
+		for num in grow:
+			var new_cell = SnakeBody.new()
+			var last_cell = snake_cells.back() as SnakeBody
+			add_child(new_cell)
+			new_cell._on_load()
+			snake_cells.push_back(new_cell)
+			for i in range(1, snake_cells.size()-1):
+				snake_cells[i].body = true
+			snake_cells[-1].tail = true
+			new_cell.current_pos = last_cell.current_pos
+	else:
+		# get the child nodes to be removed
+		var rem_cells = get_children()
+		
+		# loop through the array to remove the child nodes
+		for i in -grow:
+			snake_cells.remove_at(-1)
+			remove_child(rem_cells[-1])
+		snake_cells[-1].tail = true
+		
 
 
 func move_player():
