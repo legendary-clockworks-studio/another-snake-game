@@ -93,7 +93,7 @@ func growth_loop(grow: int):
 		# loop through the array to remove the child nodes
 		for i in -grow:
 			snake_cells.remove_at(-1)
-			remove_child(rem_cells[-1])
+			remove_child(rem_cells[-i])
 		snake_cells[-1].tail = true
 		
 
