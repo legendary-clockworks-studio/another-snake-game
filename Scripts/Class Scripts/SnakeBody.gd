@@ -4,6 +4,8 @@ class_name SnakeBody
 signal set_sprite
 
 
+enum Direction {NONE, UP, DOWN, LEFT, RIGHT}
+
 @export var head: bool: 
 	set(v): 
 		head = v; set_sprite.emit(head)
@@ -22,14 +24,21 @@ var tail: bool:
 var exists: bool: 
 	set (v): exists = v; _on_load()
 
+var next_dir: Direction
+var current_dir: Direction: set = set_movement
+var last_dir: Direction
+
+var current_pos: Vector2
+var next_pos: Vector2
+var last_pos: Vector2
+
 var head_sprite: Texture2D
 var body_sprite: Texture2D
 var tail_sprite: Texture2D
 
 var snake_sprite: = Sprite2D.new()
 
-var current_pos: = Vector2(): set = set_current_pos
-var last_pos: Vector2
+
 
 
 func _ready() -> void:
@@ -40,13 +49,30 @@ func _on_load() -> void:
 	head_sprite = load("res://Sprites/Snake/snake_head.png")
 	body_sprite = load("res://Sprites/Snake/snake_body.png")
 	tail_sprite = load("res://Sprites/Snake/snake_tail.png")
-	print("loaded")
 
 
-func set_current_pos(new_pos: Vector2) -> void:
+func set_movement(new_dir: Direction) -> void:
+	# update node position
 	last_pos = current_pos
-	current_pos = new_pos
+	current_pos = next_pos
 	global_position = current_pos
+	
+	# update sprite rotation
+	last_dir = current_dir
+	current_dir = new_dir
+	
+	#update sprite rotation
+	match current_dir:
+		Direction.UP:
+			snake_sprite.rotation_degrees = 0
+		Direction.DOWN:
+			snake_sprite.rotation_degrees = 180
+		Direction.LEFT:
+			snake_sprite.rotation_degrees = -90
+		Direction.RIGHT:
+			snake_sprite.rotation_degrees = 90
+
+
 
 
 func _set_sprite(on: bool) -> void:
@@ -55,4 +81,3 @@ func _set_sprite(on: bool) -> void:
 	if head: snake_sprite.texture = head_sprite
 	if body: snake_sprite.texture = body_sprite
 	if tail: snake_sprite.texture = tail_sprite
-	print("sprite set")
