@@ -1,0 +1,11 @@
+[gd_scene format=3 uid="uid://bc1jl5yf0rc2t"]
+
+[ext_resource type="Script" uid="uid://dcpr07gosi314" path="res://Scripts/Entities/food.gd" id="1_fk5i0"]
+[ext_resource type="Texture2D" uid="uid://bfodgy64niefc" path="res://Sprites/Snake/snake_body.png" id="1_ytys8"]
+
+[node name="Food" type="Node2D" unique_id=1509213878]
+script = ExtResource("1_fk5i0")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1243039451]
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("1_ytys8")

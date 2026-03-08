@@ -41,8 +41,10 @@ var snake_sprite: = Sprite2D.new()
 
 
 
+
 func _ready() -> void:
 	set_sprite.connect(_set_sprite)
+
 
 
 func _on_load() -> void:
@@ -54,6 +56,7 @@ func _on_load() -> void:
 func set_movement(new_dir: Direction) -> void:
 	# update node position
 	last_pos = current_pos
+	current_pos = next_pos
 	current_pos = next_pos
 	global_position = current_pos
 	
@@ -73,11 +76,10 @@ func set_movement(new_dir: Direction) -> void:
 			snake_sprite.rotation_degrees = 90
 
 
-
-
 func _set_sprite(on: bool) -> void:
 	if !exists: add_child(snake_sprite); exists = true
 	if !on: snake_sprite.texture = null
 	if head: snake_sprite.texture = head_sprite
 	if body: snake_sprite.texture = body_sprite
 	if tail: snake_sprite.texture = tail_sprite
+
